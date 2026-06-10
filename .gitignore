@@ -1,0 +1,45 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Build & distribution
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Package installer
+pip-wheel-metadata/
+.pip/
+
+# Secrets & credentials
+.env
+.env.*
+*.pem
+secrets.json
+secrets.toml
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/

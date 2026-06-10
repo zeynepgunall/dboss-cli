@@ -1,0 +1,25 @@
+import requests
+
+OLLAMA_BASE_URL = "http://localhost:11434"
+
+
+class OllamaError(Exception):
+    pass
+
+
+def generate(prompt: str, model: str = "qwen2.5-coder:1.5b") -> str:
+    url = f"{OLLAMA_BASE_URL}/api/generate"
+    payload = {"model": model, "prompt": prompt, "stream": False}
+    try:
+        resp = requests.post(url, json=payload, timeout=120)
+    except requests.exceptions.ConnectionError:
+        raise OllamaError(
+            "Ollama'ya bağlanılamadı. `ollama serve` çalışıyor mu? (localhost:11434)"
+        )
+    if resp.status_code == 404:
+        raise OllamaError(
+            f"Model bulunamadı: {model!r}. `ollama pull {model}` çalıştır."
+        )
+    if not resp.ok:
+        raise OllamaError(f"Ollama HTTP {resp.status_code}: {resp.text[:200]}")
+    return resp.json()["response"]
