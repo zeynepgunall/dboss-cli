@@ -1,6 +1,16 @@
+import re
+
 import requests
 
 OLLAMA_BASE_URL = "http://localhost:11434"
+
+
+def strip_code_fences(text: str) -> str:
+    # Remove opening fence line: ```plaintext, ```bash, ``` etc.
+    text = re.sub(r"^```[^\n]*\n", "", text)
+    # Remove closing fence line
+    text = re.sub(r"\n```\s*$", "", text)
+    return text.strip()
 
 
 class OllamaError(Exception):

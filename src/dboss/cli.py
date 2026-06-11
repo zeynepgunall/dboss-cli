@@ -3,7 +3,7 @@ import sys
 import click
 
 from dboss.git_utils import GitError, commit as commit_fn, get_staged_diff
-from dboss.ollama_client import OllamaError, generate
+from dboss.ollama_client import OllamaError, generate, strip_code_fences
 from dboss.prompts import build_commit_prompt
 
 
@@ -40,6 +40,7 @@ def commit():
         except OllamaError as e:
             raise click.ClickException(str(e))
 
+        message = strip_code_fences(message)
         click.echo(f"\nSuggested commit message:\n\n  {message}\n")
         choice = click.prompt(
             "[y] accept  [r] regenerate  [n] cancel",
