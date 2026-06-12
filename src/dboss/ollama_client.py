@@ -1,8 +1,10 @@
+import os
 import re
 
 import requests
 
 OLLAMA_BASE_URL = "http://localhost:11434"
+DEFAULT_MODEL = os.environ.get("DBOSS_MODEL", "qwen2.5-coder:3b")
 
 
 def strip_code_fences(text: str) -> str:
@@ -17,7 +19,7 @@ class OllamaError(Exception):
     pass
 
 
-def generate(prompt: str, model: str = "qwen2.5-coder:1.5b") -> str:
+def generate(prompt: str, model: str = DEFAULT_MODEL) -> str:
     url = f"{OLLAMA_BASE_URL}/api/generate"
     payload = {"model": model, "prompt": prompt, "stream": False}
     try:
