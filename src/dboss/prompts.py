@@ -8,7 +8,10 @@ def build_commit_prompt(diff: str) -> str:
         "- Do NOT wrap the message in code fences or backticks.\n"
         "- Do NOT add a language tag like 'plaintext'. Output raw text only.\n"
         "- The first (summary) line must not exceed 72 characters.\n"
-        "- If needed, add a blank line after the summary, then a body.\n\n"
+        "- If needed, add a blank line after the summary, then a body.\n"
+        "- Output EXACTLY ONE commit message. Do NOT produce a list of multiple commit messages.\n"
+        "- Do NOT invent changes that are not in the diff. Only describe what the diff actually shows.\n"
+        "- Keep it to a single summary line, optionally followed by a blank line and a short body.\n\n"
         "Git diff to summarize:\n\n"
         f"{diff}"
     )

@@ -11,5 +11,11 @@ dependencies = ["click", "requests"]
 [project.scripts]
 dboss = "dboss.cli:main"
 
+[project.optional-dependencies]
+dev = ["pytest", "pytest-mock"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/dboss"]
