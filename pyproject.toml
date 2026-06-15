@@ -4,9 +4,25 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dboss-cli"
-version = "0.1.0"
+version = "0.1.1"
+description = "CLI tool that generates Conventional Commits messages from staged git diffs using a local Ollama model."
+readme = "README.md"
 requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [{ name = "Zeynep Günal", email = "zeynep.gunal@turkai.com" }]
 dependencies = ["click", "requests"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Software Development :: Version Control :: Git",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/zeynepgunall/dboss-cli"
+"Bug Tracker" = "https://github.com/zeynepgunall/dboss-cli/issues"
 
 [project.scripts]
 dboss = "dboss.cli:main"
