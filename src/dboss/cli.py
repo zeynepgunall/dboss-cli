@@ -2,9 +2,11 @@ import sys
 
 import click
 
+from dboss.auth_client import AuthError, get_me, login as login_fn, register as register_fn
 from dboss.git_utils import GitError, commit as commit_fn, get_staged_diff
 from dboss.ollama_client import OllamaError, generate, strip_code_fences
 from dboss.prompts import build_commit_prompt
+from dboss.token_store import clear_token, load_token, save_token
 
 
 @click.group()
@@ -12,6 +14,54 @@ def main():
     """dboss — git commit message generator."""
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+
+
+@main.command()
+def register():
+    """Yeni hesap oluştur."""
+    username = click.prompt("Kullanıcı adı")
+    email = click.prompt("E-posta")
+    password = click.prompt("Şifre", hide_input=True, confirmation_prompt=True)
+    try:
+        register_fn(username, email, password)
+    except AuthError as e:
+        raise click.ClickException(str(e))
+    click.echo(f"Hesap oluşturuldu: {username}. Şimdi giriş yapabilirsin.")
+
+
+@main.command()
+def login():
+    """Hesabına giriş yap."""
+    username = click.prompt("Kullanıcı adı")
+    password = click.prompt("Şifre", hide_input=True)
+    try:
+        token = login_fn(username, password)
+    except AuthError as e:
+        raise click.ClickException(str(e))
+    save_token(token)
+    click.echo(f"Logged in as {username}")
+
+
+@main.command()
+def logout():
+    """Oturumu kapat."""
+    clear_token()
+    click.echo("Logged out.")
+
+
+@main.command()
+def whoami():
+    """Giriş yapan kullanıcıyı göster."""
+    token = load_token()
+    if not token:
+        click.echo("Not logged in.")
+        return
+    try:
+        user = get_me(token)
+    except AuthError as e:
+        raise click.ClickException(str(e))
+    click.echo(f"Username : {user.get('username', '-')}")
+    click.echo(f"Email    : {user.get('email', '-')}")
 
 
 @main.command()
