@@ -9,8 +9,8 @@ description = "CLI tool that generates Conventional Commits messages from staged
 readme = "README.md"
 requires-python = ">=3.12"
 license = { text = "MIT" }
-authors = [{ name = "Zeynep Günal", email = "zeynep.gunal@turkai.com" }]
-dependencies = ["click", "requests"]
+authors = [{ name = "Zeynep Günal", email = "zeynepgunall@outlook.com" }]
+dependencies = ["click", "requests"] 
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
@@ -35,3 +35,8 @@ testpaths = ["tests"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/dboss"]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.20",
+]
