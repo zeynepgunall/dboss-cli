@@ -6,6 +6,7 @@ from dboss.auth_client import AuthError, get_me, login, register
 
 # --- register ---
 
+
 def test_register_success(mocker):
     mock_resp = mocker.MagicMock()
     mock_resp.ok = True
@@ -38,6 +39,7 @@ def test_register_connection_error(mocker):
 
 
 # --- login ---
+
 
 def test_login_success(mocker):
     mock_resp = mocker.MagicMock()
@@ -81,6 +83,7 @@ def test_login_missing_token_in_response(mocker):
 
 
 # --- get_me ---
+
 
 def test_get_me_success(mocker):
     mock_resp = mocker.MagicMock()

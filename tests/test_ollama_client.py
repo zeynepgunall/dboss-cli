@@ -6,18 +6,23 @@ from dboss.ollama_client import OllamaError, generate, strip_code_fences
 
 # --- strip_code_fences ---
 
-@pytest.mark.parametrize("text,expected", [
-    ("```plaintext\nfeat: add login\n```", "feat: add login"),
-    ("```bash\nchore: update deps\n```", "chore: update deps"),
-    ("```\nfix: null pointer\n```", "fix: null pointer"),
-    ("feat: plain text", "feat: plain text"),
-    ("  feat: trim spaces  ", "feat: trim spaces"),
-])
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        ("```plaintext\nfeat: add login\n```", "feat: add login"),
+        ("```bash\nchore: update deps\n```", "chore: update deps"),
+        ("```\nfix: null pointer\n```", "fix: null pointer"),
+        ("feat: plain text", "feat: plain text"),
+        ("  feat: trim spaces  ", "feat: trim spaces"),
+    ],
+)
 def test_strip_code_fences(text, expected):
     assert strip_code_fences(text) == expected
 
 
 # --- generate ---
+
 
 def test_generate_success(mocker):
     mock_resp = mocker.MagicMock()

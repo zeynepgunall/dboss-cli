@@ -2,7 +2,12 @@ import sys
 
 import click
 
-from dboss.auth_client import AuthError, get_me, login as login_fn, register as register_fn
+from dboss.auth_client import (
+    AuthError,
+    get_me,
+    login as login_fn,
+    register as register_fn,
+)
 from dboss.git_utils import GitError, commit as commit_fn, get_staged_diff
 from dboss.ollama_client import OllamaError, generate, strip_code_fences
 from dboss.prompts import build_commit_prompt

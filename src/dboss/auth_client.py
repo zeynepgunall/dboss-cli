@@ -67,7 +67,9 @@ def get_me(token: str) -> dict:
     if resp.status_code == 401:
         raise AuthError("Oturum süresi dolmuş veya geçersiz token. Tekrar giriş yap.")
     if not resp.ok:
-        raise AuthError(f"Kullanıcı bilgisi alınamadı (HTTP {resp.status_code}): {resp.text[:200]}")
+        raise AuthError(
+            f"Kullanıcı bilgisi alınamadı (HTTP {resp.status_code}): {resp.text[:200]}"
+        )
     return resp.json()
 
 
