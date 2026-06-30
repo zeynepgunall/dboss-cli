@@ -3,7 +3,6 @@ import requests
 
 from dboss.auth_client import AuthError, get_me, login, register
 
-
 # --- register ---
 
 
