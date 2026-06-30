@@ -24,10 +24,10 @@ def generate(prompt: str, model: str = DEFAULT_MODEL) -> str:
     payload = {"model": model, "prompt": prompt, "stream": False}
     try:
         resp = requests.post(url, json=payload, timeout=120)
-    except requests.exceptions.ConnectionError:
+    except requests.exceptions.ConnectionError as e:
         raise OllamaError(
             "Ollama'ya bağlanılamadı. `ollama serve` çalışıyor mu? (localhost:11434)"
-        )
+        ) from e
     if resp.status_code == 404:
         raise OllamaError(
             f"Model bulunamadı: {model!r}. `ollama pull {model}` çalıştır."

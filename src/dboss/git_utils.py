@@ -12,10 +12,10 @@ def get_staged_diff() -> str:
             capture_output=True,
             check=True,
         )
-    except FileNotFoundError:
-        raise GitError("git komutu bulunamadı. Git kurulu mu?")
-    except subprocess.CalledProcessError:
-        raise GitError("Bu dizin bir git reposu değil.")
+    except FileNotFoundError as e:
+        raise GitError("git komutu bulunamadı. Git kurulu mu?") from e
+    except subprocess.CalledProcessError as e:
+        raise GitError("Bu dizin bir git reposu değil.") from e
 
     try:
         result = subprocess.run(
@@ -26,7 +26,7 @@ def get_staged_diff() -> str:
         )
         return result.stdout
     except subprocess.CalledProcessError as e:
-        raise GitError(f"git diff başarısız: {e.stderr.strip()}")
+        raise GitError(f"git diff başarısız: {e.stderr.strip()}") from e
 
 
 def commit(message: str) -> None:
@@ -38,4 +38,4 @@ def commit(message: str) -> None:
             check=True,
         )
     except subprocess.CalledProcessError as e:
-        raise GitError(f"git commit başarısız: {e.stderr.strip()}")
+        raise GitError(f"git commit başarısız: {e.stderr.strip()}") from e

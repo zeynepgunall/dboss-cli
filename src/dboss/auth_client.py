@@ -17,10 +17,10 @@ def register(username: str, email: str, password: str) -> dict:
             json={"username": username, "email": email, "password": password},
             timeout=60,
         )
-    except requests.exceptions.ConnectionError:
+    except requests.exceptions.ConnectionError as e:
         raise AuthError(
             f"Backend'e bağlanılamadı. Sunucu erişilebilir mi? ({DBOSS_API_URL})"
-        )
+        ) from e
     if resp.status_code == 400:
         detail = _extract_detail(resp)
         raise AuthError(f"Kayıt başarısız: {detail}")
@@ -37,10 +37,10 @@ def login(username: str, password: str) -> str:
             json={"username": username, "password": password},
             timeout=60,
         )
-    except requests.exceptions.ConnectionError:
+    except requests.exceptions.ConnectionError as e:
         raise AuthError(
             f"Backend'e bağlanılamadı. Sunucu erişilebilir mi? ({DBOSS_API_URL})"
-        )
+        ) from e
     if resp.status_code == 401:
         raise AuthError("Kullanıcı adı veya şifre hatalı.")
     if not resp.ok:
@@ -60,10 +60,10 @@ def get_me(token: str) -> dict:
             headers={"Authorization": f"Bearer {token}"},
             timeout=60,
         )
-    except requests.exceptions.ConnectionError:
+    except requests.exceptions.ConnectionError as e:
         raise AuthError(
             f"Backend'e bağlanılamadı. Sunucu erişilebilir mi? ({DBOSS_API_URL})"
-        )
+        ) from e
     if resp.status_code == 401:
         raise AuthError("Oturum süresi dolmuş veya geçersiz token. Tekrar giriş yap.")
     if not resp.ok:
