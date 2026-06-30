@@ -3,7 +3,6 @@ import requests
 
 from dboss.ollama_client import OllamaError, generate, strip_code_fences
 
-
 # --- strip_code_fences ---
 
 

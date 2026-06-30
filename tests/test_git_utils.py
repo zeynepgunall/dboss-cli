@@ -1,11 +1,9 @@
-import subprocess
 from subprocess import CalledProcessError
 from unittest.mock import MagicMock
 
 import pytest
 
 from dboss.git_utils import GitError, commit, get_staged_diff
-
 
 # --- get_staged_diff ---
 

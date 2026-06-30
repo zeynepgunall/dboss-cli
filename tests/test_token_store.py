@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import pytest
 
 import dboss.token_store as ts
